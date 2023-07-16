@@ -5,6 +5,9 @@
 !example.env
 *.swp
 .DS_Store
+/venv/
+/.venv/
+/env/
 
 .vscode
 .idea
