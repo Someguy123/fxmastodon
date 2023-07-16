@@ -59,7 +59,9 @@ def handle_embed(path: str):
         img_height='0' if not has_media else res['media_attachments'][0]['meta']['original']['height'],
         post_contents=content,
     )
-    # TODO: if video, render video.html
+
+    if has_media and res['media_attachments'][0]['type'] in ['gifv', 'gif', 'video']:
+        return render_template('video.html', **data)
     return render_template('image.html', **data)
 
 
