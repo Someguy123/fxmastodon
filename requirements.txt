@@ -1,0 +1,7 @@
+flask
+requests
+httpx
+privex-helpers[cache]
+lxml
+gunicorn
+

@@ -1,0 +1,75 @@
+#####
+#
+# Systemd Service file for `Someguy123/fxmastodon`
+#
+# To use this file, copy it into /etc/systemd/system/fxmastodon.service , replace `fxmastodon` with the username of the Linux
+# account it was installed into, and adjust the paths if necessary.
+#
+# Once adjusted for your specific installation, run the following:
+#
+#    systemctl enable fxmastodon.service
+#    systemctl start fxmastodon.service
+#
+# fxmastodon will now have started in the background as a systemd service, and will automatically start on reboot
+#
+#####
+[Unit]
+Description=FxMastodon embed fixer - Web App
+After=network.target
+
+[Service]
+Type=simple
+User=fxmastodon
+
+WorkingDirectory=/home/fxmastodon/fxmastodon/
+EnvironmentFile=/home/fxmastodon/fxmastodon/.env
+
+ExecStart=/home/fxmastodon/fxmastodon/run.sh server
+
+Restart=always
+Environment=PYTHONUNBUFFERED=0
+RestartSec=30
+StandardOutput=syslog
+
+# Hardening measures
+####################
+
+# Provide a private /tmp and /var/tmp.
+PrivateTmp=true
+
+# Mount /usr, /boot/ and /etc read-only for the process.
+ProtectSystem=full
+
+# Disallow the process and all of its children to gain
+# new privileges through execve().
+NoNewPrivileges=true
+
+# Use a new /dev namespace only populated with API pseudo devices
+# such as /dev/null, /dev/zero and /dev/random.
+PrivateDevices=true
+
+# Deny the creation of writable and executable memory mappings.
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target
+Alias=lg.service
+
+#####
+# +===================================================+
+# |                 © 2023 Someguy123                 |
+# |               https://github.com/Someguy123       |
+# +===================================================+
+# |                                                   |
+# |        Fix Mastodon Embeds (FxMastodon)           |
+# |        License: MIT X/11                          |
+# |                                                   |
+# |        https://github.com/Someguy123/fxmastodon   |
+# |                                                   |
+# |        Core Developer(s):                         |
+# |                                                   |
+# |          (+)  Chris (@someguy123)                 |
+# |                                                   |
+# +===================================================+
+#####
+
