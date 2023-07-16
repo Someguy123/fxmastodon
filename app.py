@@ -41,9 +41,15 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 @app.route('/<path:path>')
 def handle_embed(path: str):
     p = path.strip('/').split('/')
-    if len(p) < 3:
-        return "Invalid Mastodon URL! Must be formatted like: mastodon.social/@username/1234567"
-    dom, uname, mstatus = p[:3]
+    if len(p) < 2:
+        return "Invalid Mastodon URL! Must be formatted like: mastodon.social/@username/1234567 or mastodon.social/123456 or @username@mastodon.social/123456"
+    if len(p) == 2:
+        dom, mstatus = p
+        if '@' in dom:
+            dom = dom.split('@')[-1]
+    else:
+        dom, uname, mstatus = p[:3]
+
     api_url = f"https://{dom}/api/v1/statuses/{mstatus}"
     r = requests.get(api_url)
     r.raise_for_status()
