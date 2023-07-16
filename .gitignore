@@ -1,0 +1,11 @@
+~*
+
+*.env
+.env
+!example.env
+*.swp
+.DS_Store
+
+.vscode
+.idea
+
