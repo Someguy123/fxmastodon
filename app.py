@@ -56,9 +56,9 @@ def handle_embed(path: str):
     res = r.json()
     has_media = len(res.get('media_attachments', [])) > 0
     content = lxml.html.fromstring(res['content']).text_content()
-    favourites_count = res.get('favourites_count'),
-    reblogs_count = res.get('reblogs_count'),
-    replies_count = res.get('replies_count'),
+    favourites_count = res.get('favourites_count')
+    reblogs_count = res.get('reblogs_count')
+    replies_count = res.get('replies_count')
     data = dict(
         full_url=res['uri'],
         username=f"@{res['account']['username']}@{dom}",
