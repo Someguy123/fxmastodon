@@ -66,7 +66,7 @@ def handle_embed(path: str):
         img_url="" if not has_media else res['media_attachments'][0]['url'],
         img_width='0' if not has_media else res['media_attachments'][0]['meta']['original']['width'],
         img_height='0' if not has_media else res['media_attachments'][0]['meta']['original']['height'],
-        post_contents=f"{content} \n\n 💖 {favourites_count} ↩️ {reblogs_count} 💬{replies_count}",
+        post_contents=f"{content} \n\n💖 {favourites_count}  ↩️ {reblogs_count}  💬 {replies_count}",
     )
 
     if has_media and res['media_attachments'][0]['type'] in ['gifv', 'gif', 'video']:
