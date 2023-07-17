@@ -56,6 +56,9 @@ def handle_embed(path: str):
     res = r.json()
     has_media = len(res.get('media_attachments', [])) > 0
     content = lxml.html.fromstring(res['content']).text_content()
+    favourites_count = res.get('favourites_count')
+    reblogs_count = res.get('reblogs_count')
+    replies_count = res.get('replies_count')
     data = dict(
         full_url=res['uri'],
         username=f"@{res['account']['username']}@{dom}",
@@ -63,7 +66,7 @@ def handle_embed(path: str):
         img_url="" if not has_media else res['media_attachments'][0]['url'],
         img_width='0' if not has_media else res['media_attachments'][0]['meta']['original']['width'],
         img_height='0' if not has_media else res['media_attachments'][0]['meta']['original']['height'],
-        post_contents=content,
+        post_contents=f"{content} \n\n💖 {favourites_count}  ↩️ {reblogs_count}  💬 {replies_count}",
     )
 
     if has_media and res['media_attachments'][0]['type'] in ['gifv', 'gif', 'video']:
@@ -73,4 +76,3 @@ def handle_embed(path: str):
 
 if __name__ == '__main__':
     app.run(debug=DEBUG)
-
