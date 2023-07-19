@@ -23,7 +23,7 @@ Copyright::
 from flask import Flask, render_template, jsonify, request, session, abort, redirect, flash
 from privex.loghelper import LogHelper
 from os import getenv as env
-from privex.helpers import env_bool
+from privex.helpers import env_bool, empty
 import logging
 import requests
 import lxml.html
@@ -55,7 +55,11 @@ def handle_embed(path: str):
     r.raise_for_status()
     res = r.json()
     has_media = len(res.get('media_attachments', [])) > 0
-    content = lxml.html.fromstring(res['content']).text_content()
+    content = res.get('content', '')
+    content = '' if empty(content) else content
+    if not empty(content):
+        content = lxml.html.fromstring(content).text_content()
+
     data = dict(
         full_url=res['uri'],
         username=f"@{res['account']['username']}@{dom}",
