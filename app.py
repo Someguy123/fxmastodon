@@ -78,9 +78,9 @@ def handle_embed(path: str):
             full_url=res['uri'],
             username=f"@{res['account']['username']}@{dom}",
             display_name=res['account']['display_name'],
-            img_url="" if not has_media else res['media_attachments'][0]['url'],
-            img_width='0' if not has_media else res['media_attachments'][0]['meta']['original']['width'],
-            img_height='0' if not has_media else res['media_attachments'][0]['meta']['original']['height'],
+            img_url="" if not has_media else res['media_attachments'][0].get('url', ''),
+            img_width='0' if not has_media else res['media_attachments'][0].get('meta', {}).get('original', {}).get('width', '0'),
+            img_height='0' if not has_media else res['media_attachments'][0].get('meta', {}).get('original', {}).get('height', '0'),
             post_contents=content,
         )
 
