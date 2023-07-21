@@ -74,7 +74,7 @@ def handle_embed(path: str):
         content = '' if empty(content) else content
         if not empty(content):
             content = lxml.html.fromstring(content).text_content()
-        content += f"\n\n [{media_count} attachments]"
+        content = f" [{media_count} attachments]\n\n{content}"
         data = dict(
             full_url=res['uri'],
             username=f"@{res['account']['username']}@{dom}",
