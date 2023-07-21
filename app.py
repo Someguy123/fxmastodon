@@ -68,12 +68,13 @@ def handle_embed(path: str):
                             f"An exception of type {type(e)} has occurred, full details of this can be found in the logs by the administrator",
             ), 502
 
-        has_media = len(res.get('media_attachments', [])) > 0
+        media_count = len(res.get('media_attachments', []))
+        has_media = media_count > 0
         content = res.get('content', '')
         content = '' if empty(content) else content
         if not empty(content):
             content = lxml.html.fromstring(content).text_content()
-
+        content += f"\n\n [{media_count} attachments]"
         data = dict(
             full_url=res['uri'],
             username=f"@{res['account']['username']}@{dom}",
